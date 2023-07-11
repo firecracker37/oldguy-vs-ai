@@ -11,8 +11,8 @@ export default function Header() {
         <span className="-skew-y-12 text-2xl font-extrabold tracking-widest text-red-700">
           vs
         </span>
-        <span className="agdasima text-2xl font-extrabold tracking-widest text-amber-600">
-          The AI
+        <span className="agdasima text-2xl font-extrabold tracking-[0.3em] text-amber-600">
+          AI
         </span>
       </div>
       <div className="flex items-center justify-center gap-2">

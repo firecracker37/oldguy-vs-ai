@@ -15,9 +15,8 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen bg-zinc-950 text-gray-200">
-        <Header />
-      </div>
+
+      <h1>Home Page</h1>
     </>
   );
 }
