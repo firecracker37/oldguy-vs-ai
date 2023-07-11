@@ -9,6 +9,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function UserAvatar() {
   const { data: sessionData } = useSession();
@@ -30,9 +31,6 @@ export default function UserAvatar() {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Profile</DropdownMenuItem>
-          {sessionData.user.role === "admin" && (
-            <DropdownMenuItem>New Post</DropdownMenuItem>
-          )}
           <DropdownMenuItem>
             <span onClick={() => void signOut()}>Logout</span>
           </DropdownMenuItem>
