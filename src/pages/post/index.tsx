@@ -8,6 +8,9 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import Image from "next/image";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await getServerAuthSession(ctx);
@@ -155,6 +158,18 @@ export default function Post() {
             </div>
           </div>
         </form>
+      </div>
+      <div className="mx-auto mt-8 w-full max-w-3xl bg-zinc-900 px-2 py-4">
+        <h2 className="mb-6 text-center text-2xl font-bold text-gray-400">
+          Post Preview
+        </h2>
+        <h3 className="mb-4 text-3xl font-bold text-gray-300">
+          {inputs.title}
+        </h3>
+        <Image src={inputs.image} alt="Some Image" width={640} height={320} />
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {inputs.article}
+        </ReactMarkdown>
       </div>
     </>
   );
