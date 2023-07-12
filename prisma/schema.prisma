@@ -20,6 +20,8 @@ model Post {
   article       String    @db.Text
   author        User      @relation(fields: [authorId], references: [id])
   comments      Comment[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@index([authorId])
 }
@@ -31,6 +33,8 @@ model Comment {
   content     String  @db.Text
   author      User    @relation(fields: [authorId], references: [id])
   post        Post    @relation(fields: [postId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@index([authorId])
   @@index([postId])
