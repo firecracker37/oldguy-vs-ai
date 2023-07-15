@@ -3,25 +3,41 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
-  protectedProcedure,
   adminProcedure,
 } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  getPostById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const post = await ctx.prisma.post.findUnique({
+        where: { id: input.id },
+        select: {
+          id: true,
+          image: true,
+          title: true,
+          description: true,
+          authorId: true,
+          article: true,
+          createdAt: true,
+        },
+      });
+      if (!post) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Post not found",
+        });
+      }
+      return post;
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return "ctx.prisma.example.findMany()";
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
+  getRecentPosts: publicProcedure.query(async ({ ctx }) => {
+    const posts = await ctx.prisma.post.findMany({
+      take: 10,
+      orderBy: { createdAt: "desc" },
+      select: { id: true },
+    });
+    return posts.map((post) => post.id);
   }),
 
   createNewPost: adminProcedure
